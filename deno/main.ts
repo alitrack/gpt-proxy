@@ -10,24 +10,19 @@ let index = '';
 serve(async (request) => {
     const url = new URL(request.url);
     url.protocol = "https";
-    switch (url.pathname) {
-        case '/v1/chat/completions':
-            url.host = OPENAI_API_HOST;
-            return await fetch(url, request);
-            break;
-        case '/v1/audio/transcriptions':
-            url.host = OPENAI_API_HOST;
-            return await fetch(url, request);
-            break;
-        default:
-            if (index == '') {
-                const res = await fetch(INDEX_URL);
-                index = await res.text();
-            }
-            return new Response(index, {
-                headers: {
-                    "content-type": "text/html;charset=UTF-8",
-                },
-            });
+    if (url.pathname.startsWith('/v1/')){
+        url.host = OPENAI_API_HOST;
+        return await fetch(url, request);
+    }
+    else{
+        if (index == '') {
+            const res = await fetch(INDEX_URL);
+            index = await res.text();
+        }
+        return new Response(index, {
+            headers: {
+                "content-type": "text/html;charset=UTF-8",
+            },
+        });
     }
 });
