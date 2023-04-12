@@ -15,15 +15,10 @@ serve(async (request) => {
             url.host = OPENAI_API_HOST;
             return await fetch(url, request);
             break;
-        case '/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate':
-            url.host = 'bard.google.com';
+        case '/v1/audio/transcriptions':
+            url.host = OPENAI_API_HOST;
             return await fetch(url, request);
-        //https://bard.google.com/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate?
-        break;
-        case '/faq':    //https://bard.google.com/faq
-            url.host = 'bard.google.com';
-            return await fetch(url, request);
-        break;        
+            break;
         default:
             if (index == '') {
                 const res = await fetch(INDEX_URL);
