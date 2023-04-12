@@ -10,7 +10,8 @@ let index = '';
 serve(async (request) => {
     const url = new URL(request.url);
     url.protocol = "https";
-    if (url.pathname.startsWith('/v1/')){
+    const pathname = url.pathname;
+    if (pathname.startsWith('/v1/')|| pathname.startsWith('/dashboard')){
         url.host = OPENAI_API_HOST;
         return await fetch(url, request);
     }
